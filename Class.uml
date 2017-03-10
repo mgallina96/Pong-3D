@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>controller.Game</OriginalElement>
+  <nodes>
+    <node x="659.625" y="1189.0">controller.Game</node>
+    <node x="660.4903846153846" y="795.0">controller.Player</node>
+    <node x="871.0" y="0.0">controller.PlayerTag</node>
+    <node x="0.0" y="1439.0">application.Settings</node>
+    <node x="439.0" y="1439.0">application.Main</node>
+    <node x="658.125" y="1303.0">application.MainMenu</node>
+    <node x="98.74038461538464" y="795.0">controller.Ball</node>
+    <node x="1373.5" y="579.0">view.View</node>
+    <node x="0.0" y="343.5">view.BallView</node>
+    <node x="1149.5" y="808.5">controller.Field</node>
+    <node x="277.5384615384616" y="67.5">view.MovingObject</node>
+    <node x="563.0" y="343.5">view.PlayerView</node>
+    <node x="195.0" y="222.0">model.BallModel</node>
+    <node x="1146.0" y="330.0">view.FieldView</node>
+    <node x="758.0" y="222.0">model.PlayerModel</node>
+    <node x="291.0" y="1439.0">controller.Renderer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="controller.Game" target="controller.Ball">
+      <point x="-93.75" y="-32.0" />
+      <point x="678.375" y="1169.0" />
+      <point x="153.74038461538464" y="1169.0" />
+      <point x="-55.0" y="59.0" />
+    </edge>
+    <edge source="controller.Ball" target="view.BallView">
+      <point x="-27.5" y="-59.0" />
+      <point x="181.24038461538464" y="559.0" />
+      <point x="131.25" y="559.0" />
+      <point x="43.75" y="32.0" />
+    </edge>
+    <edge source="controller.Player" target="view.PlayerView">
+      <point x="-29.375" y="-59.0" />
+      <point x="748.6153846153846" y="549.0" />
+      <point x="694.25" y="549.0" />
+      <point x="43.75" y="32.0" />
+    </edge>
+    <edge source="application.MainMenu" target="controller.Game">
+      <point x="0.0" y="-45.5" />
+      <point x="0.0" y="32.0" />
+    </edge>
+    <edge source="controller.Field" target="view.FieldView">
+      <point x="0.0" y="-45.5" />
+      <point x="0.0" y="45.5" />
+    </edge>
+    <edge source="model.PlayerModel" target="controller.PlayerTag">
+      <point x="0.0" y="-153.5" />
+      <point x="0.0" y="86.0" />
+    </edge>
+    <edge source="view.BallView" target="view.MovingObject">
+      <point x="0.0" y="-32.0" />
+      <point x="87.5" y="197.0" />
+      <point x="311.7884615384616" y="197.0" />
+      <point x="-34.25" y="18.5" />
+    </edge>
+    <edge source="controller.Player" target="model.PlayerModel">
+      <point x="88.125" y="-59.0" />
+      <point x="866.1153846153846" y="559.0" />
+      <point x="1034.0" y="559.0" />
+      <point x="92.0" y="153.5" />
+    </edge>
+    <edge source="view.PlayerView" target="view.MovingObject">
+      <point x="0.0" y="-32.0" />
+      <point x="650.5" y="197.0" />
+      <point x="380.2884615384616" y="197.0" />
+      <point x="34.25" y="18.5" />
+    </edge>
+    <edge source="controller.Game" target="view.View">
+      <point x="93.75" y="-32.0" />
+      <point x="865.875" y="1169.0" />
+      <point x="1680.0" y="1169.0" />
+      <point x="0.0" y="275.0" />
+    </edge>
+    <edge source="controller.Game" target="controller.Field">
+      <point x="56.25" y="-32.0" />
+      <point x="828.375" y="1159.0" />
+      <point x="1251.5" y="1159.0" />
+      <point x="0.0" y="45.5" />
+    </edge>
+    <edge source="controller.Game" target="controller.Player">
+      <point x="-18.75" y="-32.0" />
+      <point x="753.375" y="1149.0" />
+      <point x="719.2403846153846" y="1149.0" />
+      <point x="-58.75" y="59.0" />
+    </edge>
+    <edge source="controller.Ball" target="model.BallModel">
+      <point x="27.5" y="-59.0" />
+      <point x="236.24038461538464" y="559.0" />
+      <point x="282.0" y="559.0" />
+      <point x="-87.0" y="153.5" />
+    </edge>
+    <edge source="controller.Player" target="controller.Game">
+      <point x="58.75" y="59.0" />
+      <point x="836.7403846153846" y="1149.0" />
+      <point x="790.875" y="1149.0" />
+      <point x="18.75" y="-32.0" />
+    </edge>
+    <edge source="controller.Ball" target="controller.Game">
+      <point x="55.0" y="59.0" />
+      <point x="263.74038461538464" y="1159.0" />
+      <point x="715.875" y="1159.0" />
+      <point x="-56.25" y="-32.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7000000000000001" x="885.7142857142856" y="1140.5714285714284" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
