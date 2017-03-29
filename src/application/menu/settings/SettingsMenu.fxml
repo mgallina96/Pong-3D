@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: black;"
+            stylesheets="@settings.css" xmlns="http://javafx.com/javafx/8.0.60"
+            fx:controller="application.menu.settings.SettingsMenu">
+    <children>
+        <BorderPane layoutX="240.0" layoutY="190.0" prefHeight="984.0" prefWidth="1406.0">
+            <top>
+                <VBox alignment="TOP_CENTER" layoutX="480.0" prefHeight="200.0" prefWidth="100.0" spacing="100.0"
+                      BorderPane.alignment="CENTER">
+                    <children>
+                        <GridPane minHeight="700.0" prefHeight="700.0" prefWidth="1422.0">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0"
+                                                   prefWidth="500.0"/>
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="500.0"
+                                                   minWidth="10.0" prefWidth="500.0"/>
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="0.0"
+                                                   prefWidth="100.0"/>
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="0.0"
+                                                   prefWidth="300.0"/>
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0"
+                                                   minWidth="10.0" prefWidth="100.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0"
+                                                vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="28.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="28.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="28.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0"
+                                                vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <Label text="DIFFICULTY" textFill="WHITE" GridPane.rowIndex="2">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                </Label>
+                                <Button fx:id="diffPrev" maxHeight="64.0" maxWidth="64.0" mnemonicParsing="false"
+                                        prefHeight="64.0" prefWidth="64.0" text="&lt;" textFill="WHITE"
+                                        GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                    <GridPane.margin>
+                                        <Insets/>
+                                    </GridPane.margin>
+                                    <padding>
+                                        <Insets left="10.0" right="10.0"/>
+                                    </padding>
+                                </Button>
+                                <Label fx:id="diffLabel" text="NORMAL" textFill="WHITE" GridPane.columnIndex="3"
+                                       GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                </Label>
+                                <Button fx:id="diffNext" maxHeight="64.0" maxWidth="64.0" mnemonicParsing="false"
+                                        prefHeight="64.0" prefWidth="64.0" text="&gt;" textFill="WHITE"
+                                        GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" right="10.0"/>
+                                    </padding>
+                                </Button>
+                                <Label text="AI" textFill="WHITE" GridPane.rowIndex="4">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                </Label>
+                                <Button fx:id="aiPrev" maxHeight="64.0" maxWidth="64.0" mnemonicParsing="false"
+                                        prefHeight="64.0" prefWidth="64.0" text="&lt;" textFill="WHITE"
+                                        GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" right="10.0"/>
+                                    </padding>
+                                </Button>
+                                <Label fx:id="aiLabel" text="NORMAL" textFill="WHITE" GridPane.columnIndex="3"
+                                       GridPane.rowIndex="4">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                </Label>
+                                <Label text="MUSIC" textFill="WHITE" GridPane.rowIndex="6">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="musicLabel" text="ON" textFill="WHITE" GridPane.columnIndex="3"
+                                       GridPane.rowIndex="6">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                </Label>
+                                <Label text="SOUND" textFill="WHITE" GridPane.rowIndex="8">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="soundLabel" text="ON" textFill="WHITE" GridPane.columnIndex="3"
+                                       GridPane.rowIndex="8">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                </Label>
+                                <Button fx:id="back" mnemonicParsing="false" text="BACK TO MENU" textFill="WHITE"
+                                        GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                </Button>
+                                <Label text="SETTINGS" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="96.0"/>
+                                    </font>
+                                </Label>
+                                <Button fx:id="aiNext" maxHeight="64.0" maxWidth="64.0" mnemonicParsing="false"
+                                        prefHeight="64.0" prefWidth="64.0" text="&gt;" textFill="WHITE"
+                                        GridPane.columnIndex="4" GridPane.rowIndex="4">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" right="10.0"/>
+                                    </padding>
+                                </Button>
+                                <Button fx:id="musicNext" maxHeight="64.0" maxWidth="64.0" mnemonicParsing="false"
+                                        prefHeight="64.0" prefWidth="64.0" text="&gt;" textFill="WHITE"
+                                        GridPane.columnIndex="4" GridPane.rowIndex="6">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" right="10.0"/>
+                                    </padding>
+                                </Button>
+                                <Button fx:id="soundNext" maxHeight="64.0" maxWidth="64.0" mnemonicParsing="false"
+                                        prefHeight="64.0" prefWidth="64.0" text="&gt;" textFill="WHITE"
+                                        GridPane.columnIndex="4" GridPane.rowIndex="8">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" right="10.0"/>
+                                    </padding>
+                                </Button>
+                                <Button fx:id="musicPrev" maxHeight="64.0" maxWidth="64.0" mnemonicParsing="false"
+                                        prefHeight="64.0" prefWidth="64.0" text="&lt;" textFill="WHITE"
+                                        GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" right="10.0"/>
+                                    </padding>
+                                </Button>
+                                <Button fx:id="soundPrev" maxHeight="64.0" maxWidth="64.0" mnemonicParsing="false"
+                                        prefHeight="64.0" prefWidth="64.0" text="&lt;" textFill="WHITE"
+                                        GridPane.columnIndex="2" GridPane.rowIndex="8">
+                                    <font>
+                                        <Font name="Tw Cen MT Condensed Extra Bold" size="61.0"/>
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" right="10.0"/>
+                                    </padding>
+                                </Button>
+                            </children>
+                        </GridPane>
+                    </children>
+                </VBox>
+            </top>
+        </BorderPane>
+    </children>
+</AnchorPane>
