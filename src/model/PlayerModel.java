@@ -1,21 +1,43 @@
 package model;
 
-import controller.*;
+import application.Settings;
+import controller.Ball;
+import controller.Field;
+import controller.Player;
+import controller.PlayerTag;
+import controller.gameelement.GameElement;
+import controller.gameelement.GameElementModel;
+import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
-import utility.geometry.geometry3d.Dimension3D;
+import javafx.scene.input.MouseEvent;
+import model.listener.BallListener;
+import model.listener.GameElementListener;
+import model.listener.PlayerListener;
+import utility.sound.SoundPlayer;
 
 import java.util.List;
+import java.util.logging.Logger;
+
+import static controller.Player.SIZE;
 
 /**
- * The Player model.
- * This class defines how the player moves.
+ * The Player model component.
+ * <p>
+ * This class defines how the player and the AI move. It also updates their position.
+ * It works with the {@link model.BallModel ball model} to check if the ball bounces on the player's bat.
  *
  * @author Manuel Gallina
+ * @author Giosuè Filippini
  */
-public class PlayerModel implements BallListener {
-    private static final Dimension3D SIZE = new Dimension3D(80, 80, 2);
+public class PlayerModel extends GameElementModel implements BallListener {
+    private static final Logger LOGGER = Logger.getLogger(PlayerModel.class.getName());
+
+    private static final String POINT_SOUND_URL = "out/production/Pong3D/music/Pong 3D - Vittoria.wav";
+
+    private Field field;
 
     private PlayerTag tag;
+    private int score;
 
     private Point3D position;
     private Point3D target;
@@ -36,14 +58,20 @@ public class PlayerModel implements BallListener {
      * @param tag        The player tag.
      */
     public PlayerModel(Player controller, PlayerTag tag) {
+        super(controller);
+
         this.tag = tag;
         position = tag.getPosition();
-        target = new Point3D(0, 0, 0);
-        instantTarget = new Point3D(0, 0, 0);
-        speed = 25;
+        target = ORIGIN;
+        instantTarget = ORIGIN;
+        speed = Settings.aiDifficulty.getSpeed();
+        score = 0;
+
+        if (tag == PlayerTag.P1 || tag == PlayerTag.P2) // Player moves faster than AI.
+            speed = 15; //15 - 20
 
         List<GameElement> objectsList = controller.getGame().getObjectsList();
-        Field field = (Field) objectsList.get(0);
+        field = (Field) objectsList.get(0);
 
         left = -field.getSize().getWidth() / 2 + field.getPosition().getX() + SIZE.getWidth() / 2;
         right = field.getSize().getWidth() / 2 + field.getPosition().getX() - SIZE.getWidth() / 2;
@@ -59,74 +87,60 @@ public class PlayerModel implements BallListener {
         double sceneHeight = controller.getGame().getScene().getHeight();
 
         if (this.tag == PlayerTag.P1 || this.tag == PlayerTag.P2) {
-            controller.getGame().getScene().setOnMouseMoved(e -> {
+            EventHandler<MouseEvent> mouseEventHandler = e -> {
                 double cursorX = e.getSceneX() - controller.getGame().getScene().getWidth() / 2;
                 double cursorY = e.getSceneY() - controller.getGame().getScene().getHeight() / 2;
 
                 instantTarget = new Point3D((int) (fieldWidth * cursorX / sceneWidth), (int) (fieldHeight * cursorY / sceneHeight), 0);
-            });
-            controller.getGame().getScene().setOnMouseDragged(e -> {
-                double cursorX = e.getSceneX() - controller.getGame().getScene().getWidth() / 2;
-                double cursorY = e.getSceneY() - controller.getGame().getScene().getHeight() / 2;
+            };
+            controller.getGame().getScene().setOnMouseMoved(mouseEventHandler);
+            controller.getGame().getScene().setOnMouseDragged(mouseEventHandler);
+        }
 
-                instantTarget = new Point3D((int) (fieldWidth * cursorX / sceneWidth), (int) (fieldHeight * cursorY / sceneHeight), 0);
-            });
-        } else if (this.tag == PlayerTag.AI1 || this.tag == PlayerTag.AI2) {
-            for (GameElement e : objectsList) {
-                if (e instanceof Ball)
-                    ((Ball) e).addListener(this);
-            }
+        for (GameElement e : objectsList) { // Listening to the ball(s).
+            if (e instanceof Ball)
+                e.addListener(this);
         }
     }
 
-    /**
-     * @return The player size.
-     */
-    public Dimension3D getSize() {
-        return SIZE;
-    }
-
-    /**
-     * @return The player position.
-     */
+    /** @return The player position. */
     public Point3D getPosition() {
         return position;
     }
 
-    /**
-     * Updates the position of the player, based on the target position.
-     */
+    /** Updates the position of the player, following the target position. */
     public void updatePosition() {
         target = instantTarget;
 
         double l = target.getX() - position.getX();
         double m = target.getY() - position.getY();
+
         double k;
 
-        double x, y;
+        double x;
+        double y;
 
-        if (Math.abs(m) > speed || Math.abs(l) > speed) {
+        if (Math.abs(m) > speed || Math.abs(l) > speed) {   // If the player is far from the target.
             k = speed / Math.sqrt(m * m + l * l);
 
             x = l * k + position.getX();
             y = m * k + position.getY();
 
-        } else {
+        } else {    // If the player is near to the target.
             x = target.getX();
             y = target.getY();
         }
 
+        // Bound check.
         if (x > right) {
             x = right;
-        }
-        if (x < left) {
+        } else if (x < left) {
             x = left;
         }
 
         if (y > top) {
             y = top;
-        }
-        if (y < bottom) {
+        } else if (y < bottom) {
             y = bottom;
         }
 
@@ -143,13 +157,39 @@ public class PlayerModel implements BallListener {
         double y0 = position.getY();
         double z0 = position.getZ();
 
-        if ((tag == PlayerTag.AI2 && direction.getZ() > 0) || (tag == PlayerTag.AI1 && direction.getZ() < 0)) {
+        double zP = this.position.getZ();
+        double fDepth = field.getSize().getDepth();
+
+        // AI logic. It updates its position when the ball bounces and it's moving towards the player.
+        if (this.tag == PlayerTag.AI1 || this.tag == PlayerTag.AI2
+                && n / zP > 0 && Math.abs(z0) < fDepth / 2
+                && Math.abs(fDepth / 2 * Math.signum(n) - z0) > 30) {
             double iX = (l / n) * (tag.getPosition().getZ() - z0) + x0;
             double iY = (m / l) * (iX - x0) + y0;
 
-            double r = 160;     // This determines the AI precision. The lower the better. A value of 160 is good.
+            double r = Settings.aiDifficulty.getPrecision();     // This determines the AI precision. The lower the better. A value of 160 is good.
 
             instantTarget = new Point3D(iX + Math.random() * r - r / 2, iY + Math.random() * r - r / 2, 0);
         }
+
+        if (n / this.position.getZ() < 0 && Math.abs(z0) > field.getSize().getDepth()) {
+            this.score++;
+            new SoundPlayer().playSound(POINT_SOUND_URL);
+            LOGGER.info(String.format("%s: %d \n", tag, score));
+        }
+
+        if (Math.abs(fDepth / 2 * Math.signum(n) - z0) < 30 && n / zP > 0)
+            fireEvent();
+    }
+
+    /* Fires an event. */
+    private void fireEvent() {
+        for (GameElementListener listener : getListenersList()) {
+            ((PlayerListener) listener).onPlayerEvent(position, SIZE);
+        }
+    }
+
+    public int getScore() {
+        return score;
     }
 }

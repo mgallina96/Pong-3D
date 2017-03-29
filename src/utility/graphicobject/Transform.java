@@ -1,4 +1,4 @@
-package utility.graphics.graphicobject;
+package utility.graphicobject;
 
 /**
  * This interface provides a list of methods that let a subclass to be positioned in the 3D space.

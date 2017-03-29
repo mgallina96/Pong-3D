@@ -4,14 +4,13 @@ import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.CullFace;
-import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
-import utility.geometry.geometry3d.Dimension3D;
-import utility.graphics.graphicobject.Object3D;
+import javafx.scene.shape.Rectangle;
+import utility.graphicobject.Object3D;
 
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -23,24 +22,27 @@ public class FieldView {
     private static final String MESH_PATH = "/obj-models/FieldWire.obj";
     private static final double SCALE_FACTOR = 30;
 
+    private static int sideNear = 2900;
+    private static int sideFar = 1200;
+    private static int sideBack1 = 1300;
+    private static int sideBack2 = 600;
+
+    /* Private constructor to hide the default public one. */
+    private FieldView() {
+    }
+
     /**
-     * Constructor.
+     * Builds the field model and adds it to the scene.
      *
-     * @param size The dimensions of the field.
-     * @param root The root node of the scene.
+     * @param position The field position.
+     * @param root     The root node of the scene.
+     *
+     * @throws IOException If the field 3D model can't be found.
      */
-    public FieldView(Dimension3D size, Point3D position, Group root) {
-        Box shape = new Box(20000, 20000, 10);
-        Box shape2 = new Box(3900, 3900, 10);
+    public static void createField(Point3D position, Group root) throws IOException {
         Object3D parent = new Object3D();
-
-        PhongMaterial shapeMaterial = new PhongMaterial(Color.DARKRED);
-        PhongMaterial shape2Material = new PhongMaterial(Color.BLACK);
-        PhongMaterial innerMaterial = new PhongMaterial(Color.ORANGERED);
-
-        AmbientLight ambient = new AmbientLight();
-
-        URL objFileUrl = this.getClass().getResource(MESH_PATH);
+        AmbientLight ambientLight = new AmbientLight();
+        URL objFileUrl = FieldView.class.getResource(MESH_PATH);
         MeshView innerShape = parent.importObjMesh(objFileUrl);
 
         innerShape.setScaleX(SCALE_FACTOR);
@@ -49,29 +51,49 @@ public class FieldView {
         innerShape.setTranslateX(0);
         innerShape.setTranslateY(10);
         innerShape.setTranslateZ(300);
-        innerShape.setMaterial(innerMaterial);
+        innerShape.setMaterial(new PhongMaterial(Color.BLACK));
 
-        shape.setTranslateX(0);
-        shape.setTranslateY(0);
-        shape.setTranslateZ(9000);
-        shape.setDrawMode(DrawMode.FILL);
-        shape.setCullFace(CullFace.FRONT);
-        shape.setMaterial(shapeMaterial);
-        shape.setVisible(true);
+        Rectangle nearSide = getNearSide(Color.color(0, 0.6627, 0.7765));
+        Rectangle farSide = getFarSide(Color.color(0.8274, 0.505, 0), sideFar, 801);
+        Rectangle background1 = getBackground(Color.BLACK, sideBack1, 802);
+        Rectangle background2 = getBackground(Color.BLACK, sideBack2, 800);
 
-        shape2.setTranslateX(0);
-        shape2.setTranslateY(0);
-        shape2.setTranslateZ(8900);
-        shape2.setDrawMode(DrawMode.FILL);
-        shape2.setCullFace(CullFace.FRONT);
-        shape2.setMaterial(shape2Material);
-        shape2.setVisible(true);
+        nearSide.setTranslateX(-sideNear / 2);
+        nearSide.setTranslateY(-sideNear / 2);
+
+        farSide.setTranslateX(-sideFar / 2);
+        farSide.setTranslateY(-sideFar / 2);
+
+        background1.setTranslateX(-sideBack1 / 2);
+        background1.setTranslateY(-sideBack1 / 2);
+
+        background2.setTranslateX(-sideBack2 / 2);
+        background2.setTranslateY(-sideBack2 / 2);
+
+        nearSide.setOpacity(0.9);
+        farSide.setOpacity(0.9);
 
         parent.setTranslateX(position.getX());
         parent.setTranslateY(position.getY());
         parent.setTranslateZ(position.getZ());
 
-        parent.getChildren().addAll(shape, shape2, innerShape, ambient);
+        parent.getChildren().addAll(background1, farSide, background2, nearSide, innerShape, ambientLight);
         root.getChildren().add(parent);
+    }
+
+    private static Rectangle getBackground(Paint material, int side, int distance) {
+        Rectangle back = new Rectangle(side, side);
+        back.setTranslateZ(distance);
+        back.setFill(material);
+        back.setVisible(true);
+        return back;
+    }
+
+    private static Rectangle getFarSide(Paint farSideMaterial, int side, int distance) {
+        return getBackground(farSideMaterial, side, distance);
+    }
+
+    private static Rectangle getNearSide(Paint nearSideMaterial) {
+        return getFarSide(nearSideMaterial, sideNear, 803);
     }
 }

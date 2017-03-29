@@ -1,4 +1,4 @@
-package utility.graphics.graphicobject;
+package utility.graphicobject;
 
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import javafx.geometry.Point3D;
@@ -7,6 +7,7 @@ import javafx.scene.shape.MeshView;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -17,15 +18,13 @@ import java.net.URL;
  */
 public class Object3D extends Group implements Transform, ObjImporter {
     /**
-     * The obj mesh importer.
-     */
-    private static final ObjModelImporter OBJ_IMPORTER = new ObjModelImporter();
-
-    /**
      * Conversion factor: radiant into degrees.
      */
     public static final double RAD_TO_DEG = 180.0 / Math.PI;
-
+    /**
+     * The obj mesh importer.
+     */
+    private static final ObjModelImporter OBJ_IMPORTER = new ObjModelImporter();
     private Translate position = new Translate(0, 0, 0);
     private Rotation rotation = new Rotation();
     private Scale scale = new Scale();
@@ -44,6 +43,7 @@ public class Object3D extends Group implements Transform, ObjImporter {
      *
      * @param a First position.
      * @param b Second position.
+     *
      * @return The distance between a and b.
      */
     public static double distance(Translate a, Translate b) {
@@ -165,14 +165,11 @@ public class Object3D extends Group implements Transform, ObjImporter {
      * Imports the mesh from a .obj file.
      *
      * @param path The file path.
+     *
+     * @throws IOException If it can't find the obj file.
      */
-    public MeshView importObjMesh(URL path) {
-        try {
-            OBJ_IMPORTER.read(path);
-        } catch (Exception e) {
-            return null;
-        }
-
+    public MeshView importObjMesh(URL path) throws IOException {
+        OBJ_IMPORTER.read(path);
         return OBJ_IMPORTER.getImport()[0];
     }
 

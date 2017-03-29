@@ -1,16 +1,19 @@
-package model;
+package model.listener;
 
 import javafx.geometry.Point3D;
 
 /**
  * Ball events listener.
- * It's triggered whenever the ball changes its direction.
  *
  * @author Manuel Gallina
+ * @author Giosuè Filippini
  */
-public interface BallListener {
+@FunctionalInterface
+public interface BallListener extends GameElementListener {
     /**
      * Executes this action when triggered.
+     * It's triggered whenever the ball changes its direction or its state, for example when bouncing on
+     * the walls or touches the players.
      *
      * @param position  The ball position.
      * @param direction The ball direction.

@@ -1,7 +1,8 @@
-package utility.graphics.graphicobject;
+package utility.graphicobject;
 
 import javafx.scene.shape.MeshView;
 
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -15,7 +16,8 @@ public interface ObjImporter {
      * Imports the mesh from an .obj file.
      *
      * @param path The file path.
+     *
      * @return The mesh.
      */
-    MeshView importObjMesh(URL path);
+    MeshView importObjMesh(URL path) throws IOException;
 }

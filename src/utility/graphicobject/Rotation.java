@@ -1,4 +1,4 @@
-package utility.graphics.graphicobject;
+package utility.graphicobject;
 
 import javafx.scene.transform.Rotate;
 

@@ -1,8 +1,7 @@
 package controller;
 
-import javafx.geometry.Point3D;
+import controller.gameelement.GameElement;
 import javafx.scene.Group;
-import model.BallListener;
 import model.BallModel;
 import view.BallView;
 
@@ -11,52 +10,22 @@ import view.BallView;
  *
  * @author Manuel Gallina
  */
-public class Ball implements GameElement {
-    private BallModel model;
-    private BallView view;
-    private Game game;
-
+public class Ball extends GameElement {
     /**
      * Constructor.
      *
      * @param game The current game.
      * @param root The rendering group of the current scene.
      */
-    Ball(Game game, Group root) {
-        this.game = game;
+    public Ball(Game game, Group root) {
+        super(game);
 
-        model = new BallModel(this);
-        view = new BallView(BallModel.RADIUS, root);
+        setModel(new BallModel(this));
+        setView(new BallView(BallModel.RADIUS, root));
     }
 
-    /**
-     * @return The current game.
-     */
-    public Game getGame() {
-        return game;
-    }
-
-    /**
-     * Adds a listener to the model's listeners list.
-     *
-     * @param listener The listener to add.
-     */
-    public void addListener(BallListener listener) {
-        model.addListener(listener);
-    }
-
-    @Override
-    public void updateModel() {
-        model.updatePosition();
-    }
-
-    @Override
-    public void updateView(Point3D position) {
-        view.moveTo(position);
-    }
-
-    @Override
-    public Point3D getPosition() {
-        return model.getPosition();
+    /** Starts listening to all the players events. */
+    void addPlayers() {
+        ((BallModel) getModel()).addPlayers();
     }
 }

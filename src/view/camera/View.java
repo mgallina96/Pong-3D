@@ -1,8 +1,8 @@
-package view;
+package view.camera;
 
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
-import utility.graphics.graphicobject.Object3D;
+import utility.graphicobject.Object3D;
 
 /**
  * This class represents a {@link javafx.scene.PerspectiveCamera perspective camera} in the 3D space.

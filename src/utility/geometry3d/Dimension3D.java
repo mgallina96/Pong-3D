@@ -1,4 +1,4 @@
-package utility.geometry.geometry3d;
+package utility.geometry3d;
 
 /**
  * This class represents the dimensions of a 3D object.
